@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TickTock | Clock</title>
+    <link rel="stylesheet" href="styleclock.css">
+    <link rel="icon" type="image/x-icon" href="D:\Web\TickTock\favicon.ico">
+    <script src="scriptclock.js"></script>
+</head>
+<body onload="getTime()">
+    <div class="navbar">
+        <li><a href="#">Clock</a></li>
+        <li><a href="D:\Web\TickTock\timer.html">Timer</a></li>
+        <li><a href="D:\Web\TickTock\stopwatch.html">Stopwatch</a></li>
+    </div>
+    <div class="container">
+            <div id="greet-msg"></div>
+            <p id="msg">Time is:</p>
+            <div id="time"></div>
+            <div id="year-details"></div>
+            <button id="btn-format" onclick="toggleFormat()">Change to <span id="hrformat">24-hr </span> Format</button></div>
+    </div>
+</body>
+</html>

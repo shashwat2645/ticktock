@@ -1,0 +1,208 @@
+:root {
+    --primary-color: #4f7df3;
+    --secondary-color: #3b5fc2;
+    --bg-color: #1d1f2f;
+    --text-color: #f5f5f5;
+    --button-hover-color: #3655b0;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+  }
+  * {
+    user-select: none;
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+  }
+  @keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+  body {
+    /* background: url('Web/TickTock/bg.jpg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-size: cover; */
+    background: linear-gradient(270deg, var(--bg-color), #bfe9ff);
+    background-size: 400% 400%;
+    animation: gradient 10s ease infinite;
+    background: linear-gradient(180deg, red, #c3cfe2);
+    background: radial-gradient(circle at top right, #2b3d70, #181a2d);
+    height: 100vh;
+    
+  }
+  /* creating a nav bar */
+  .navbar{
+    height: 8%;
+    font-size: 1.7rem;
+    align-items: center;
+    /* background-color: antiquewhite; */
+    display: flex;
+    justify-content: space-around;
+  }
+  .navbar li{
+    list-style-type: none;
+  }
+  a{
+    color: var(--display-color);
+    text-decoration: none;
+    padding: 10px 40px;
+    transition: all 1s ease;
+    text-shadow: 0 4px 10px var(--primary-color);
+  }
+  .navbar a:hover{
+    color: var(--primary-color);
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    text-shadow: 0 0 3px var(--text-color);
+  }
+  
+  
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 70vh;
+    padding: 0 80px;
+    width: fit-content;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 10px;
+    box-shadow: 0 0 30px var(--text-color);
+  }
+  
+  .time {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 0;
+  }
+  .msg {
+    display: block;
+  }
+  #timer-msg {
+    font-size: 2rem;
+  }
+  input {
+    background-color: var(--bg-color);
+    height: fit-content;
+    width: 50px;
+    font-size: 2rem;
+    text-align: center;
+    border: none;
+    background-color: var(--bg-color);
+  }
+  label {
+    font-size: 1rem;
+  }
+  .countdown {
+    font-size: 2rem;
+  }
+  .button-counter {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    width: fit-content;
+    border: none;
+    transition: all 1s ease;  
+  }
+  .button-counter:hover {
+    background-color: var(--button-hover-color);
+    box-shadow: 0 0 15px var(--text-color);
+  }
+  
+  #remaining {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+  .countdown {
+    width: fit-content;
+    height: fit-content;
+    font-size: 3rem;
+  }
+  #over-time {
+    text-align: center;
+  }
+  #sound-option {
+    font-size: 1rem;
+    width: 100px;
+  }
+  #preinstalled-sounds {
+    font-size: 1rem;
+    color: var(--bg-color);
+    background-color: var(--bg-color);
+    border: none;
+    color: var(--text-color);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .container {
+      width: fit-content;
+      height: 70vh;
+    }
+    #timer-msg {
+      font-size: 1.5rem;
+    }
+    input {
+      height: 40px;
+      width: 40px;
+      font-size: 1.5rem;
+    }
+    .button-counter {
+      padding: 10px 20px;
+      font-size: 1rem;
+    }
+    .countdown {
+      font-size: 2rem;
+    }
+    #preinstalled-sounds {
+      font-size: 0.8rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container {
+      width: 90%;
+      height: 70vh;
+      padding: 10px 20px;
+    }
+    #timer-msg {
+      font-size: 1.2rem;
+    }
+    input {
+      height: 35px;
+      width: 35px;
+      font-size: 1.2rem;
+    }
+    .time {
+      flex-direction: column;
+      text-align: center;
+    }
+    .button-counter {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+    .countdown {
+      font-size: 1.5rem;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #preinstalled-sounds {
+      font-size: 0.5rem;
+    }
+  }

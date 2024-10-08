@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TickTock | CountDown</title>
+    <link rel="stylesheet" href="styletimer.css" />
+    <link rel="icon" type="image/x-icon" href="D:\Web\TickTock\favicon.ico">
+
+  </head>
+  <body>
+    <div class="navbar">
+      <li><a href="D:\Web\TickTock\index.html">Clock</a></li>
+      <li><a href="#">Timer</a></li>
+      <li><a href="D:\Web\TickTock\stopwatch.html">Stopwatch</a></li>
+    </div>
+    <div class="container">
+      <span id="timer-msg">Countdown Timer</span>
+      <!-- Taking input from user for time -->
+      <div class="time">
+        <div>
+          <label for="hour">Hours:</label><br />
+          <input type="number" id="hour" value="00" min="00" />
+        </div>
+        <div>
+          <label for="minute">Minutes:</label><br />
+          <input type="number" id="minute" value="00" min="00" max="59" />
+        </div>
+        <div>
+          <label for="second">Seconds:</label><br />
+          <input type="number" id="second" value="00" min="00" max="59" />
+        </div>
+      </div>
+      <!-- Options for preinstalled alarms -->
+      <label for="preinstalled-sounds">Choose Alarm Sound:</label>
+      <select id="preinstalled-sounds">
+        <option value="D:\Web\TickTock\Alarms\Alarm-Sound-1.wav">Alarm Sound 1</option>
+        <option value="D:\Web\TickTock\Alarms\Alarm-Sound-2.wav">Alarm Sound 2</option>
+        <option value="D:\Web\TickTock\Alarms\Alarm-Sound-3.wav">Alarm Sound 3</option>
+        <option value="D:\Web\TickTock\Alarms\Alarm-Sound-4.wav">Alarm Sound 4</option>
+        <option value="D:\Web\TickTock\Alarms\Alarm-Sound-5.wav">Alarm Sound 5</option>
+        <option value="D:\Web\TickTock\Alarms\Alarm-Sound-6.wav">Alarm Sound 6</option>
+        <option value="D:\Web\TickTock\Alarms\Alarm-Sound-7.wav">Alarm Sound 7</option>
+        <option value="D:\Web\TickTock\Alarms\Alarm-Sound-8.wav">Alarm Sound 8</option>
+      </select>
+      <!-- Start button -->
+      <button
+        id="count-button"
+        class="button-counter"
+        onclick="countdownInput()"
+      >
+        Start Countdown
+      </button>
+      <!-- Reset button -->
+      <button class="button-counter" onclick="reset()">Reset Countdown</button>
+
+      <!-- Display countdown -->
+      <div class="countdown">
+        <div id="remaining">Time left:</div>
+        <span id="hours">00</span>
+        <span class="colon">:</span>
+        <span id="minutes">00</span>
+        <span class="colon">:</span>
+        <span id="seconds">00</span>
+      </div>
+      <!-- Display overtime message -->
+      <div id="over-time" style="visibility: hidden"></div>
+    </div>
+    <!-- audio alarm -->
+    <audio src="Alarm-Sound-1.wav" id="alarm-sound" preload="auto"></audio>
+  </body>
+  <script>
+    let countdownInterval, overtimeInterval, blinkInterval, timeup;
+    const playAlarm = document.getElementById("alarm-sound");
+    document.addEventListener("DOMContentLoaded", handleSoundSelection);
+
+    // input fields
+    function countdownInput() {
+      const hourInput = document.getElementById("hour").value;
+      const minuteInput = document.getElementById("minute").value;
+      const secondInput = document.getElementById("second").value;
+      const totalSeconds =
+        (parseInt(hourInput) || 0) * 3600 +
+        (parseInt(minuteInput) || 0) * 60 +
+        (parseInt(secondInput) || 0);
+      
+      timeup = document.getElementById("over-time");
+      timeup.style.visibility = "hidden";
+      clearInterval(overtimeInterval);
+
+      if (totalSeconds > 0) {
+        document.getElementById("count-button").disabled = true;
+        startCountdown(totalSeconds);
+      } else {
+        alert("Please set a timer of atleast 1 second.");
+      }
+    }
+
+    // reset function
+    function reset() {
+      clearInterval(countdownInterval);
+      clearInterval(overtimeInterval);
+      clearInterval(blinkInterval);
+      document.getElementById("hour").value = "00";
+      document.getElementById("minute").value = "00";
+      document.getElementById("second").value = "00";
+      // Reset time display
+      document.getElementById("hours").textContent = "00";
+      document.getElementById("minutes").textContent = "00";
+      document.getElementById("seconds").textContent = "00";
+
+      document.getElementById("over-time").textContent = "";
+      document.getElementById("over-time").style.visibility = "hidden";
+      document.getElementById("count-button").disabled = false;
+
+      document.getElementById("seconds").style.color = "#f5f1f1";
+      // Stop the alarm if it's playing
+      playAlarm.pause();
+      playAlarm.currentTime = 0;
+    }
+
+    // Handle pre-installed sound selection
+    function handleSoundSelection() {
+      const soundSelect = document.getElementById("preinstalled-sounds");
+      soundSelect.addEventListener("change", function (event) {
+        const selectedSound = event.target.value; // Get the selected sound
+        playAlarm.src = selectedSound; // Set the audio element's source to the selected sound
+      });
+    }
+
+    //  Countdown function
+    function startCountdown(duration) {
+      let timer = duration,
+        hours,
+        minutes,
+        seconds;
+      const hourElement = document.getElementById("hours");
+      const minuteElement = document.getElementById("minutes");
+      const secondElement = document.getElementById("seconds");
+      
+      
+      countdownInterval = setInterval(function () {
+        hours = Math.floor(timer / 3600);
+        minutes = Math.floor((timer % 3600) / 60);
+        seconds = timer % 60;
+        
+        hourElement.textContent = hours.toString().padStart(2, "0");
+        minuteElement.textContent = minutes.toString().padStart(2, "0");
+        secondElement.textContent = seconds.toString().padStart(2, "0");
+        
+        if (timer <= 10 && timer >= 0) {
+          secondElement.style.color = "#ff0000";
+          clearInterval(blinkInterval); // Clear any previous blink intervals
+          blinkInterval = setInterval(() => {
+            secondElement.style.visibility =
+            secondElement.style.visibility === "hidden"
+            ? "visible"
+            : "hidden";
+          }, 450);
+        }
+        
+        if (--timer < 0) {
+          clearInterval(countdownInterval);
+          clearInterval(blinkInterval);
+          secondElement.style.color = "#f5f1f1";
+          document.getElementById("count-button").disabled = false;
+          playAlarm.play();
+          setTimeout(() => {
+            playAlarm.pause();
+            playAlarm.currentTime = 0; // Reset to start
+          }, 10000);
+
+          // Display time's up message
+          timeup.textContent = "Time's Up!!";
+          timeup.style.visibility = "visible";
+          timeup.style.color = "#e63838";
+          timeup.style.fontSize = "2rem";
+          timeup.style.fontWeight = "bold";
+
+          // Blink time's up message
+          overtimeInterval = setInterval(() => {
+            timeup.style.visibility =
+              timeup.style.visibility === "hidden" ? "visible" : "hidden";
+          }, 1000);
+        }
+      }, 1000);
+    }
+  </script>
+</html>
